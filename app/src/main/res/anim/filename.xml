@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shareInterpolator="true"
+    android:fillAfter="true">
+    <!--透明度动画-->
+    <alpha
+        android:fromAlpha="0"
+        android:toAlpha="0"/>
+    <!--缩放动画
+        android:fromXScale 水平方向缩放的起始值
+        android:toXScale    结束值
+        android:fromYScale
+        android:toYScale
+        android:pivotX    缩放的轴点的x的坐标，它会影响缩放的效果
+        android:pivotY
+    -->
+    <scale
+        android:fromXScale="0"
+        android:toXScale="0"
+        android:fromYScale="0"
+        android:toYScale="0"
+        android:pivotX="0"
+        android:pivotY="0"/>
+    <!--平移动画,它可以使一个View在水平和竖直方向完成平移的动画效果
+        android:fromXDelta 表示X的起始值
+        android:toXDelta 表示X的结束值
+        android:fromYDelta 表示Y的起始值
+        android:toYDelta 表示Y的结束值
+    -->
+    <translate
+        android:fromXDelta="0"
+        android:toXDelta="0"
+        android:fromYDelta="0"
+        android:toYDelta="0"/>
+    <!--旋转动画
+        android:fromDegrees     旋转开始的角度
+    -->
+    <rotate
+        android:fromDegrees="0"
+        android:toDegrees="0"
+        android:pivotX="0"
+        android:pivotY="0"/>
+</set>
