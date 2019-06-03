@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -42,18 +43,21 @@ public class WindowFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view1);
         recyclerView.setItemAnimator(null);
         //GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
-        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(staggeredGridLayoutManager);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        //StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.HORIZONTAL);
+        //recyclerView.setLayoutManager(staggeredGridLayoutManager);
+        recyclerView.setLayoutManager(layoutManager);
         fruitAdapter = new FruitAdapter(fruitList,getActivity());
         recyclerView.setAdapter(fruitAdapter);
-        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh1);
+        /*swipeRefreshLayout = view.findViewById(R.id.swipe_refresh1);
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorAccent));
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 refreshFruits();
             }
-        });
+        });*/
         return view;
     }
     private void refreshFruits(){

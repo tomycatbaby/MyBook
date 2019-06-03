@@ -19,13 +19,14 @@ import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Scroller;
 import android.widget.TextView;
 
 import com.lzf.mybook.R;
 
-public class MyLayout extends View {
+public class MyLayout extends LinearLayout {
 
     private final Paint mPaint;
     private final Matrix matrix;
@@ -39,10 +40,10 @@ public class MyLayout extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        mPaint.setAntiAlias(true);
+        /*mPaint.setAntiAlias(true);
         mPaint.setColor(Color.RED);
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic);
-        RectF mRectF  = new RectF(20,20,200,200);
+        RectF mRectF  = new RectF(20,20,200,200);*/
        // canvas.drawArc(mRectF,-45,360,false,mPaint);
         //canvas.drawCircle(100,100,80,mPaint);
       /*  matrix.postTranslate(100,0);
@@ -51,4 +52,10 @@ public class MyLayout extends View {
 
         super.onDraw(canvas);
     }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        return false;
+    }
+
 }
