@@ -89,7 +89,6 @@ public class DetailActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        unbindService(serviceConnection);
         super.onDestroy();
     }
 

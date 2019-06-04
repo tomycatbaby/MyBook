@@ -31,7 +31,7 @@ public class WindowFragment extends Fragment {
     private SwipeRefreshLayout swipeRefreshLayout;
     private List<Fruit> fruitList = new ArrayList<>();
     private Fruit[] fruits = {new Fruit("apple is 7.0￥,so I cant afford it", R.drawable.apple), new Fruit("banana", R.drawable.banana),
-            new Fruit("orange", R.drawable.orange),new Fruit("peer", R.drawable.peer)};
+            new Fruit("orange", R.drawable.orange),new Fruit("peer", R.drawable.peer),new Fruit("movie",R.drawable.movie)};
 
 
     @Override
@@ -41,15 +41,25 @@ public class WindowFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_window,container, false);
         initFruits();
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view1);
+        RecyclerView recyclerView1 = view.findViewById(R.id.recycler_view2);
+        recyclerView1.setItemAnimator(null);
         recyclerView.setItemAnimator(null);
         //GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        LinearLayoutManager layoutManager1 = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        layoutManager1.setOrientation(LinearLayoutManager.HORIZONTAL);
         //StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.HORIZONTAL);
         //recyclerView.setLayoutManager(staggeredGridLayoutManager);
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView1.setLayoutManager(layoutManager1);
+        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView1.setNestedScrollingEnabled(false);
+        //recyclerView.setNestedScrollingEnabled(true);
+        //recyclerView1.setNestedScrollingEnabled(true);
         fruitAdapter = new FruitAdapter(fruitList,getActivity());
         recyclerView.setAdapter(fruitAdapter);
+        recyclerView1.setAdapter(fruitAdapter);
         /*swipeRefreshLayout = view.findViewById(R.id.swipe_refresh1);
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorAccent));
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -83,10 +93,10 @@ public class WindowFragment extends Fragment {
 
     private void initFruits() {
         fruitList.clear();
-        for (int i = 0; i < 50; i++) {
-            Random random = new Random();
-            int index = random.nextInt(fruits.length);
-            fruitList.add(fruits[index]);
+        for (int i = 0; i < 7; i++) {
+            //Random random = new Random();
+            //int index = random.nextInt(fruits.length);
+            fruitList.add(fruits[4]);
         }
     }
     @Override

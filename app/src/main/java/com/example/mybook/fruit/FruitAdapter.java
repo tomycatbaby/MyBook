@@ -13,6 +13,7 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -44,7 +45,9 @@ public class FruitAdapter extends RecyclerView.Adapter<FruitAdapter.ViewHolder>{
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         Fruit fruit = mFruitList.get(position);
         holder.fruitName.setText(fruit.getName());
-        Glide.with(mContext).load(fruit.getImageId()).into(holder.fruitImage);
+        Glide.with(mContext)
+                .load(fruit.getImageId())
+                .into(holder.fruitImage);
         holder.fruitImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +60,6 @@ public class FruitAdapter extends RecyclerView.Adapter<FruitAdapter.ViewHolder>{
                         putExtra("width", holder.fruitImage.getWidth()).
                         putExtra("height", holder.fruitImage.getHeight()).
                         putExtra("imageId",mFruitList.get(position).getImageId());
-
                 mContext.startActivity(intent);
                 activity.overridePendingTransition(0, 0);*/
             }
@@ -70,14 +72,16 @@ public class FruitAdapter extends RecyclerView.Adapter<FruitAdapter.ViewHolder>{
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{
-        CardView cardView;
+        View cardView;
         ImageView fruitImage;
         TextView fruitName;
+        Button button;
         ViewHolder(View view) {
             super(view);
-            cardView = (CardView) view;
+            cardView =  view;
             fruitImage = view.findViewById(R.id.fruit_image);
             fruitName = view.findViewById(R.id.fruit_name);
+            button = view.findViewById(R.id.fruit_action);
         }
     }
 }
