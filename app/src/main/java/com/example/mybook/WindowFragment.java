@@ -1,35 +1,40 @@
 package com.example.mybook;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
-import com.example.mybook.fruit.Fruit;
-import com.example.mybook.fruit.FruitAdapter;
+import com.example.mybook.entity.Fruit;
+import com.example.mybook.entity.FruitAdapter;
+import com.example.mybook.entity.Window;
+import com.example.mybook.entity.WindowAdapter;
 import com.lzf.mybook.R;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 
 public class WindowFragment extends Fragment {
     private String TAG = "WindowFragment";
     private View view;
-    private FruitAdapter fruitAdapter;
+    private WindowAdapter windowAdapter;
+
     private SwipeRefreshLayout swipeRefreshLayout;
     private List<Fruit> fruitList = new ArrayList<>();
+    private List<Window> windowList = new ArrayList<>();
     private Fruit[] fruits = {new Fruit("apple is 7.0￥,so I cant afford it", R.drawable.apple), new Fruit("banana", R.drawable.banana),
             new Fruit("orange", R.drawable.orange),new Fruit("peer", R.drawable.peer),new Fruit("movie",R.drawable.movie)};
 
@@ -41,25 +46,25 @@ public class WindowFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_window,container, false);
         initFruits();
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view1);
-        RecyclerView recyclerView1 = view.findViewById(R.id.recycler_view2);
-        recyclerView1.setItemAnimator(null);
         recyclerView.setItemAnimator(null);
         //GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        LinearLayoutManager layoutManager1 = new LinearLayoutManager(getActivity());
-        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        layoutManager1.setOrientation(LinearLayoutManager.HORIZONTAL);
+        MyLinearLayoutManager layoutManager = new MyLinearLayoutManager(getActivity());
+        //layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         //StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.HORIZONTAL);
         //recyclerView.setLayoutManager(staggeredGridLayoutManager);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView1.setLayoutManager(layoutManager1);
+        try {
+            XmlPullParserFactory xmlPullParser =  XmlPullParserFactory.newInstance();
+
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        }
         recyclerView.setNestedScrollingEnabled(false);
-        recyclerView1.setNestedScrollingEnabled(false);
         //recyclerView.setNestedScrollingEnabled(true);
         //recyclerView1.setNestedScrollingEnabled(true);
-        fruitAdapter = new FruitAdapter(fruitList,getActivity());
-        recyclerView.setAdapter(fruitAdapter);
-        recyclerView1.setAdapter(fruitAdapter);
+        //fruitAdapter = new FruitAdapter(fruitList);
+        windowAdapter= new WindowAdapter(windowList,getContext());
+        recyclerView.setAdapter(windowAdapter);
         /*swipeRefreshLayout = view.findViewById(R.id.swipe_refresh1);
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorAccent));
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -83,7 +88,7 @@ public class WindowFragment extends Fragment {
                     @Override
                     public void run() {
                         initFruits();
-                        fruitAdapter.notifyDataSetChanged();
+                        //fruitAdapter.notifyDataSetChanged();
                         swipeRefreshLayout.setRefreshing(false);
                     }
                 });
@@ -97,6 +102,13 @@ public class WindowFragment extends Fragment {
             //Random random = new Random();
             //int index = random.nextInt(fruits.length);
             fruitList.add(fruits[4]);
+        }
+        for (int i = 0; i < 2; i++) {
+            Window w = new Window();
+            w.setName("正在热映");
+            w.setNumber((i+1)*7);
+            w.setList(fruitList);
+            windowList.add(w);
         }
     }
     @Override

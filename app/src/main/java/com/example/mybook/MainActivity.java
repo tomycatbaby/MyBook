@@ -2,6 +2,7 @@ package com.example.mybook;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.os.Message;
 import android.security.keystore.KeyProperties;
 import android.support.design.widget.TabLayout;
@@ -23,6 +24,7 @@ import android.view.MotionEvent;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.lzf.mybook.R;
 
 import java.io.IOException;
@@ -42,27 +44,31 @@ import okhttp3.Response;
 import static com.lzf.mybook.R.id.tablayout;
 
 public class MainActivity extends AppCompatActivity {
-    private String TAG = "MainActivity";
+    private static String TAG = "MainActivity";
     private ViewPager viewPager;
     private List<Fragment> fragmentList = new ArrayList<>();
     private TextView window;
     private TextView home;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.app_bar_main);
+        getWindow().setBackgroundDrawable(null);
         //Toolbar toolbar = findViewById(R.id.toolbar);
         //DrawerLayout drawer = findViewById(R.id.drawer_layout);
         //ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
         //        this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-       // drawer.addDrawerListener(toggle);
+        // drawer.addDrawerListener(toggle);
         //toggle.syncState();
-        Message.obtain();
-        TabLayout tabLayout =  findViewById(R.id.tablayout);
+        //Message.obtain();
+
+        TabLayout tabLayout = findViewById(tablayout);
         tabLayout.addTab(tabLayout.newTab().setText("电影"));
         tabLayout.addTab(tabLayout.newTab().setText("电视剧"));
         tabLayout.addTab(tabLayout.newTab().setText("综艺"));
         tabLayout.addTab(tabLayout.newTab().setText("书籍"));
+        Looper.myLooper();
 
         //window = findViewById(R.id.window);
         //home = findViewById(R.id.home);
@@ -82,10 +88,10 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                if (position==0){
+                if (position == 0) {
                     //window.setTextColor(getResources().getColor(R.color.black,getTheme()));
                     //home.setTextColor(getResources().getColor(R.color.darkgray,getTheme()));
-                }else if(position ==1){
+                } else if (position == 1) {
                     //window.setTextColor(getResources().getColor(R.color.darkgray,getTheme()));
                     //home.setTextColor(getResources().getColor(R.color.black,getTheme()));
                 }
@@ -98,9 +104,10 @@ public class MainActivity extends AppCompatActivity {
         });
         Log.d(TAG, "onCreate: ");
     }
+
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer =  findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -108,44 +115,44 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-/*
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
+    /*
+        @SuppressWarnings("StatementWithEmptyBody")
+        @Override
+        public boolean onNavigationItemSelected(MenuItem item) {
+            // Handle navigation view item clicks here.
+            int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+            if (id == R.id.nav_camera) {
+                // Handle the camera action
+            } else if (id == R.id.nav_gallery) {
 
-        } else if (id == R.id.nav_slideshow) {
+            } else if (id == R.id.nav_slideshow) {
 
-        } else if (id == R.id.nav_manage) {
+            } else if (id == R.id.nav_manage) {
 
-        } else if (id == R.id.nav_share) {
+            } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
+            } else if (id == R.id.nav_send) {
 
-        }
+            }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }*/
-    public void test(){
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
+            return true;
+        }*/
+    public void test() {
         Intent intent = new Intent();
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .addInterceptor(new Interceptor() {
                     @Override
                     public Response intercept(Chain chain) throws IOException {
-                        return null;
+                        return chain.proceed(chain.request());
                     }
                 })
                 .build();
         Request request = new Request.Builder().build();
-        Call call  = client.newCall(request);
+        Call call = client.newCall(request);
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -153,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(Call call, Response response){
 
             }
         });
@@ -182,6 +189,7 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         Log.d(TAG, "onPause: ");
     }
+
     @Override
     protected void onRestart() {
         super.onRestart();

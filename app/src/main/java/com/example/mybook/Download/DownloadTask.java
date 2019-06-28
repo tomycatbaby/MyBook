@@ -1,4 +1,4 @@
-package com.example.mybook.DownloadTask;
+package com.example.mybook.Download;
 
 import android.os.AsyncTask;
 import android.os.Environment;
@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
 
-import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -23,7 +22,6 @@ public class DownloadTask extends AsyncTask<String, Integer, Integer> {
     private boolean isCanceled = false;
     private boolean isPaused = false;
     private int lastProgress = 0;
-
     public DownloadTask(DownloadListener downloadListener) {
         this.listener = downloadListener;
     }
@@ -33,6 +31,7 @@ public class DownloadTask extends AsyncTask<String, Integer, Integer> {
         InputStream is = null;
         RandomAccessFile saveFile = null;
         File file = null;
+
         try {
             long downloadLength = 0;
             String downloadUrl = params[0];

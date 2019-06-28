@@ -74,4 +74,9 @@ public class MarqueeText extends android.support.v7.widget.AppCompatTextView {
         super.onVisibilityChanged(changedView, visibility);
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+
+        return super.onTouchEvent(event);
+    }
 }

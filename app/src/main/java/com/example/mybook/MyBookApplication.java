@@ -9,7 +9,7 @@ import android.util.Log;
 
 
 
-public class MyBookApplication  extends Application{
+public class MyBookApplication  extends Application {
     private String TAG = "MyBookApplication";
     @Override
     public void onCreate() {

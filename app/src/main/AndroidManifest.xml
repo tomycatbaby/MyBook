@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.lzf.mybook">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -10,14 +11,18 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <application
         android:name="com.example.mybook.MyBookApplication"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar">
+
+        android:theme="@style/AppTheme.NoActionBar"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name="com.example.mybook.MainActivity"
             android:launchMode="singleTop">
@@ -35,9 +40,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="com.lzf.mybook.default.category" />
                 <category android:name="com.lzf.mybook.default.mybook" />
+
             </intent-filter>
         </activity>
-        <activity android:name="com.example.mybook.DetailActivity">
+        <activity android:name="com.example.mybook.DetailActivity" android:exported="true">
             <intent-filter>
                 <action android:name="det" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -48,7 +54,7 @@
             android:enabled="true"
             android:exported="true" />
         <service
-            android:name="com.example.mybook.DownloadTask.DownloadService"
+            android:name="com.example.mybook.Download.DownloadService"
             android:enabled="true"
             android:exported="true" />
         <receiver android:name="com.example.mybook.StaticReceiver">

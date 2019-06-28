@@ -1,62 +1,25 @@
 package com.example.mybook.myview;
 
+import android.app.IntentService;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
-public class TickView extends ViewGroup{
+public class TickView extends TextView {
 
     public TickView(Context context) {
         super(context);
     }
 
-    /**
-     * Implement this method to intercept all touch screen motion events.  This
-     * allows you to watch events as they are dispatched to your children, and
-     * take ownership of the current gesture at any point.
-     * <p>
-     * <p>Using this function takes some care, as it has a fairly complicated
-     * interaction with {@link View#onTouchEvent(MotionEvent)
-     * View.onTouchEvent(MotionEvent)}, and using it requires implementing
-     * that method as well as this one in the correct way.  Events will be
-     * received in the following order:
-     * <p>
-     * <ol>
-     * <li> You will receive the down event here.
-     * <li> The down event will be handled either by a child of this view
-     * group, or given to your own onTouchEvent() method to handle; this means
-     * you should implement onTouchEvent() to return true, so you will
-     * continue to see the rest of the gesture (instead of looking for
-     * a parent view to handle it).  Also, by returning true from
-     * onTouchEvent(), you will not receive any following
-     * events in onInterceptTouchEvent() and all touch processing must
-     * happen in onTouchEvent() like normal.
-     * <li> For as long as you return false from this function, each following
-     * event (up to and including the final up) will be delivered first here
-     * and then to the target's onTouchEvent().
-     * <li> If you return true from here, you will not receive any
-     * following events: the target view will receive the same event but
-     * with the action {@link MotionEvent#ACTION_CANCEL}, and all further
-     * events will be delivered to your onTouchEvent() method and no longer
-     * appear here.
-     * </ol>
-     *
-     * @param ev The motion event being dispatched down the hierarchy.
-     * @return Return true to steal motion events from the children and have
-     * them dispatched to this ViewGroup through onTouchEvent().
-     * The current target will receive an ACTION_CANCEL event, and no further
-     * messages will be delivered here.
-     */
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-        return super.onInterceptTouchEvent(ev);
-    }
+
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
+
 
     }
 
@@ -68,8 +31,18 @@ public class TickView extends ViewGroup{
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        //widthMeasureSpec代表一个32为int值，高2位代表测试模式（SpecMode），低两位代表某个测试模式下的测试大小（SpecSize）
+        //测试模式一共三种：UNSPECIFIED,EXACTLY,AT_MOST
+        //UNSPECIFIED 父容器不对View有任何限制，要多大给多大，这种情况一般用于系统内部
+        //EXACTLY 父容器已经检测出了具体的数值，对应LayoutParams的match_parent和具体的数值这两种
+        //AT_MOST 对应的是LayoutParams的wrap_content，父容器指定了一个SpecSize，View的大小不能大于这个值，具体大小看View的实现
         final int paddingLeft = getPaddingLeft();
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+
+        return super.onTouchEvent(event);
     }
 }

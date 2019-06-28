@@ -15,7 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:transitionName="@string/shared"/>
+        android:src="@drawable/banana"/>
 
 
 </android.support.constraint.ConstraintLayout>

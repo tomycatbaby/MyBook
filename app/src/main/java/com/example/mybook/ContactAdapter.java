@@ -3,15 +3,11 @@ package com.example.mybook;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.example.mybook.fruit.Fruit;
-import com.lzf.mybook.R;
+import com.example.mybook.entity.Fruit;
 
 import java.util.List;
 

@@ -2,47 +2,55 @@ package com.example.mybook;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.PendingIntent;
-import android.app.job.JobScheduler;
-import android.app.job.JobService;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.Looper;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresPermission;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.SubscriptionManager;
+import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.util.LruCache;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mybook.DB.MyDatabaseHelper;
-import com.example.mybook.DownloadTask.DownloadService;
+import com.example.mybook.Download.DownloadService;
+import com.example.mybook.myview.TickView;
 import com.lzf.mybook.R;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
 public class DetailActivity extends AppCompatActivity {
     private String TAG = "DetailActivity";
     private TextView textView;
+    private TextView t1;
     private MyReceiver myReceiver;
     private MyDatabaseHelper databaseHelper;
-    private ServiceConnection serviceConnection  = new ServiceConnection() {
+    private LruCache lruCache;
+    private Handler handler;
+    private ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
 
@@ -53,38 +61,131 @@ public class DetailActivity extends AppCompatActivity {
 
         }
     };
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        return super.dispatchTouchEvent(ev);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        Log.d(TAG, "onRestoreInstanceState: ");
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        Log.d(TAG, "onSaveInstanceState: ");
+
+        super.onSaveInstanceState(outState);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate: ");
         setContentView(R.layout.activity_detail);
         textView = findViewById(R.id.text1);
+        t1 = findViewById(R.id.t1);
         myReceiver = new MyReceiver(this);
-        Intent intent = new Intent(this,DownloadService.class);
-        databaseHelper = new MyDatabaseHelper(this,"BookStore.db",null,1);
+        Intent intent = new Intent(this, DownloadService.class);
+        databaseHelper = new MyDatabaseHelper(this, "BookStore.db", null, 1);
+        final TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+
         //startService(intent);
+
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase();
+                MyLayout.prepare();
+                List list = getActiveSubscriptionInfoList(getApplicationContext());
+                /*SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase();
                 ContentValues c = new ContentValues();
-                c.put("name","The Da Vinci Code");
-                c.put("author","Dan Brown");
-                c.put("pages","454");
-                c.put("price","16.96");
-                sqLiteDatabase.insert("Book",null,c);
-                Cursor cursor = sqLiteDatabase.query("Book",null,null,null,null,null,null);
-                if (cursor.moveToFirst()){
+                c.put("name", "The Da Vinci Code");
+                c.put("author", "Dan Brown");
+                c.put("pages", "454");
+                c.put("price", "16.96");
+                sqLiteDatabase.insert("Book", null, c);
+                Cursor cursor = sqLiteDatabase.query("Book", null, null, null, null, null, null);
+                if (cursor.moveToFirst()) {
                     String string = cursor.getString(cursor.getColumnIndex("name"));
-                    Log.d(TAG, "onClick: "+string);
+                    Log.d(TAG, "onClick: " + string);
                     cursor.close();
-                }
-                getContentResolver();
+                }*/
                 /*ContentValues c1 = new ContentValues();
                 c1.put("price","19.99");
                 sqLiteDatabase.update("Book",c1,"neme = ?",new String[]{"The Da Vinci Code"});*/
+                if (tm != null) {
+                    if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                        // TODO: Consider calling
+                        //    ActivityCompat#requestPermissions
+                        // here to request the missing permissions, and then overriding
+                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                        //                                          int[] grantResults)
+                        // to handle the case where the user grants the permission. See the documentation
+                        // for ActivityCompat#requestPermissions for more details.
+                        return;
+                    }
+                    String ss = tm.getSubscriberId();
+
+                    try {
+                        Method method = tm.getClass().getMethod("getSubscriberId", int.class);
+                        String s = (String) method.invoke(tm, 1);
+                        String s1 = (String) method.invoke(tm, 4);
+                        if (ss != null) {
+                            textView.setText(ss);
+                        }
+                        /*if (s1 != null) {
+                            t1.setText(s1);
+                        }*/
+                    } catch (NoSuchMethodException e) {
+                        e.printStackTrace();
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    } catch (InvocationTargetException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
+               /* Intent intent1 = new Intent(Intent.ACTION_CALL);
+                Uri data = Uri.parse("tel:10086");
+                intent1.setData(data);
+                startActivity(intent1);*/
             }
         });
         //T();
+        //findDeep();
+    }
+
+    private void findDeep() {
+        ViewGroup viewGroup = (ViewGroup) getWindow().getDecorView();
+        //ViewGroup viewGroup = findViewById(android.R.id.content);
+        TickView tickView = new TickView(getApplicationContext());
+        Queue<View> queue = new LinkedList<>();
+        queue.add(viewGroup);
+        queue.add(tickView);
+        int deep = 0;
+        while (!queue.isEmpty()) {
+            if (queue.peek() instanceof ViewGroup) {
+                viewGroup = (ViewGroup) queue.poll();
+                int count = viewGroup.getChildCount();
+                if (count > 0) {
+                    for (int i = 0; i < count; i++) {
+                        if (viewGroup.getChildAt(i) instanceof ViewGroup) {
+                            queue.offer(viewGroup.getChildAt(i));
+                        }
+                    }
+                }
+            } else if (queue.peek() instanceof TickView) {
+                queue.poll();
+                deep++;
+                if (!queue.isEmpty()) {
+                    queue.offer(tickView);
+                }
+            }
+        }
+        Log.d(TAG, "findDeep: " + deep);
     }
 
     @Override
@@ -94,8 +195,8 @@ public class DetailActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        Log.d(TAG, "onRequestPermissionsResult: "+grantResults[0]);
-        if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        Log.d(TAG, "onRequestPermissionsResult: " + grantResults[0]);
+        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             Uri uri = Uri.parse("tel:10086");
             Intent intent = new Intent(Intent.ACTION_CALL, uri);
             //startActivity(intent);
@@ -143,7 +244,7 @@ public class DetailActivity extends AppCompatActivity {
 
     private void showLoaction(Location location) {
         if (location != null) {
-            textView.setText(location.getLongitude() + "," + location.getLatitude());
+            textView.setText(String.format("%s,%s", location.getLongitude(), location.getLatitude()));
             Toast.makeText(getApplicationContext(), "location：" + location.getLongitude() + "," + location.getLatitude(), Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(getApplicationContext(), "定位失败", Toast.LENGTH_LONG).show();
@@ -151,14 +252,45 @@ public class DetailActivity extends AppCompatActivity {
             i.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
         }
     }
-    class MyReceiver extends BroadcastReceiver{
-       private Activity activity;
-       MyReceiver(Activity activity){
-           this.activity = activity;
-       }
+
+    class MyReceiver extends BroadcastReceiver {
+        private Activity activity;
+
+        MyReceiver(Activity activity) {
+            this.activity = activity;
+        }
+
         @Override
         public void onReceive(Context context, Intent intent) {
 
         }
+    }
+
+    public List getActiveSubscriptionInfoList(Context context) {
+        SubscriptionManager subscriptionManager = SubscriptionManager.from(context);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return null;
+        }
+        List list = subscriptionManager.getActiveSubscriptionInfoList();
+
+        return list;
+
+    }
+
+    public static void showDialog(){
+        DialogFragment dialogFragment = new DialogFragment(){
+            @Nullable
+            @Override
+            public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+                return super.onCreateView(inflater, container, savedInstanceState);
+            }
+        };
     }
 }

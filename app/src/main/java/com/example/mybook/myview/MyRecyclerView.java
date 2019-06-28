@@ -41,4 +41,9 @@ public class MyRecyclerView extends RecyclerView {
         }
         return super.onInterceptTouchEvent(ev);
     }*/
+
+    @Override
+    public boolean onTouchEvent(MotionEvent e) {
+        return super.onTouchEvent(e);
+    }
 }

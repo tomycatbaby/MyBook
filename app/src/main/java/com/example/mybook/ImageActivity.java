@@ -1,37 +1,14 @@
 package com.example.mybook;
 
 
-import android.Manifest;
-
 import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
-import android.annotation.SuppressLint;
-import android.app.Person;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Build;
-import android.os.Handler;
-import android.os.HandlerThread;
-import android.os.IBinder;
-import android.os.Message;
-import android.support.annotation.StringDef;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Layout;
-import android.transition.ChangeBounds;
-import android.transition.Explode;
-import android.transition.Fade;
-import android.transition.Slide;
 import android.util.Log;
 
 
@@ -42,27 +19,12 @@ import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.example.mybook.DownloadTask.DownloadService;
-import com.example.mybook.fruit.Fruit;
-import com.example.mybook.myview.TickView;
 import com.lzf.mybook.R;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.util.List;
-import java.util.concurrent.locks.ReentrantLock;
 
 import rx.Observable;
 import rx.Observer;
@@ -85,9 +47,6 @@ public class ImageActivity extends AppCompatActivity {
     private ColorDrawable colorDrawable;
     private String TAG = "PersonalActivity";
 
-    {
-
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

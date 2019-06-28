@@ -12,8 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.mybook.fruit.Fruit;
-import com.example.mybook.fruit.FruitAdapter;
+import com.example.mybook.entity.Fruit;
+import com.example.mybook.entity.FruitAdapter;
 import com.lzf.mybook.R;
 
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ public class HomeFragment extends Fragment {
         //GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
-        fruitAdapter = new FruitAdapter(fruitList,getActivity());
+        fruitAdapter = new FruitAdapter(fruitList,getContext());
         recyclerView.setAdapter(fruitAdapter);
         swipeRefreshLayout = view.findViewById(R.id.swipe_refresh);
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorAccent));

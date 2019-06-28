@@ -1,4 +1,4 @@
-package com.example.mybook.DownloadTask;
+package com.example.mybook.Download;
 
 public interface DownloadListener {
     void onProgress(int progress);
