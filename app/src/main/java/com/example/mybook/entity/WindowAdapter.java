@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.lzf.mybook.R;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class WindowAdapter extends RecyclerView.Adapter<WindowAdapter.ViewHolder> {
     private Context mContext;
@@ -39,6 +40,7 @@ public class WindowAdapter extends RecyclerView.Adapter<WindowAdapter.ViewHolder
         holder.windowName.setText(window.name);
         holder.windowNumber.setText(String.valueOf(window.number));
         holder.windowRecyclerView.setItemAnimator(null);
+        holder.windowRecyclerView.setNestedScrollingEnabled(false);
         holder.windowRecyclerView.setAdapter(new FruitAdapter(window.list,mContext));
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);

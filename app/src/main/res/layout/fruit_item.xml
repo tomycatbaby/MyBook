@@ -11,6 +11,7 @@
         android:id="@+id/fruit_image"
         android:layout_width="100dp"
         android:layout_height="140dp"
+        android:src="@drawable/movie"
         android:padding="2dp"/>
 
     <com.example.mybook.MarqueeText

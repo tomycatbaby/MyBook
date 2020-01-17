@@ -1,7 +1,9 @@
 package com.example.mybook.Download;
 
+import android.app.DownloadManager;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.os.HandlerThread;
 import android.util.Log;
 
 import java.io.File;
@@ -31,7 +33,8 @@ public class DownloadTask extends AsyncTask<String, Integer, Integer> {
         InputStream is = null;
         RandomAccessFile saveFile = null;
         File file = null;
-
+        HandlerThread thread = new HandlerThread("");
+        thread.quit();
         try {
             long downloadLength = 0;
             String downloadUrl = params[0];

@@ -3,10 +3,13 @@ package com.example.mybook;
 
 import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,12 +29,9 @@ import android.widget.TextView;
 
 import com.lzf.mybook.R;
 
-import rx.Observable;
-import rx.Observer;
-import rx.Subscriber;
 
 
-public class ImageActivity extends AppCompatActivity {
+public class ImageActivity extends BaseActivity {
     private TextView textView;
     private ImageView imageView;
     private int mLeftDelta;
@@ -53,19 +53,22 @@ public class ImageActivity extends AppCompatActivity {
         getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         setContentView(R.layout.activity_personal);
         ViewGroup viewGroup = findViewById(android.R.id.content);
-
+        finish();
         View view = viewGroup.getChildAt(0);
         Intent intent = getIntent();
+
         int draw = intent.getIntExtra("imageId", 0);
+        /*
         intentTop = intent.getIntExtra("top", 0);
         intentLeft = intent.getIntExtra("left", 0);
         intentWidth = intent.getIntExtra("width", 0);
-        intentHeight = intent.getIntExtra("height", 0);
-        Log.d(TAG, "intentTop " + intentTop);
-        Log.d(TAG, "intentLeft  " + intentLeft);
-        Log.d(TAG, "intentWidth  " + intentWidth);
-        Log.d(TAG, "intentHeight " + intentHeight);
+        intentHeight = intent.getIntExtra("height", 0);*/
+//        Log.d(TAG, "intentTop " + intentTop);
+//        Log.d(TAG, "intentLeft  " + intentLeft);
+//        Log.d(TAG, "intentWidth  " + intentWidth);
+//        Log.d(TAG, "intentHeight " + intentHeight);
         imageView = findViewById(R.id.image1);
+
         colorDrawable = new ColorDrawable(Color.BLACK);
         if (draw != 0) {
             imageView.setImageDrawable(getDrawable(draw));
@@ -100,40 +103,15 @@ public class ImageActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        /*FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.action_settings,new WindowFragment());
         transaction.addToBackStack(null);
-        transaction.commit();*/
+        transaction.commit();
         Log.d("lzf", "onDestroy: ");
     }
 
-    public void testRxJava() {
-        Observer<String> observer = new Observer<String>() {
-            @Override
-            public void onCompleted() {
-                Log.d(TAG, "onCompleted: ");
-            }
 
-            @Override
-            public void onError(Throwable e) {
-                Log.d(TAG, "onError: ");
-            }
-
-            @Override
-            public void onNext(String s) {
-                Log.d(TAG, "onNext: ");
-            }
-        };
-        Observable<String> observable = Observable.create(new Observable.OnSubscribe<String>() {
-            @Override
-            public void call(Subscriber<? super String> subscriber) {
-                subscriber.onNext("Hello");
-                subscriber.onCompleted();
-            }
-        });
-
-    }
 
     protected void setHalfTransparent() {
 

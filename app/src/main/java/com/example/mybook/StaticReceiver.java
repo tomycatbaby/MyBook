@@ -15,6 +15,7 @@ public class StaticReceiver extends BroadcastReceiver{
         Log.d("lzf", "onReceive: "+intent.getAction());
         Intent intent1 = context.getPackageManager().getLaunchIntentForPackage("com.lzf.mybook");
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent1);
     }
 }

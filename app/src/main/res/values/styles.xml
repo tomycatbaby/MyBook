@@ -18,10 +18,50 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="dialog_title">
+        <item name="android:layout_width">300dp</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:background">@drawable/rect_solid_border</item>
+    </style>
+
+    <declare-styleable name="ShadowLayout">
+        <!--阴影的圆角大小-->
+        <attr name="yc_cornerRadius" format="dimension" />
+        <!--阴影的扩散范围(也可以理解为扩散程度)-->
+        <attr name="yc_shadowLimit" format="dimension" />
+        <!--阴影颜色-->
+        <attr name="yc_shadowColor" format="color" />
+        <!--x轴的偏移量-->
+        <attr name="yc_dx" format="dimension" />
+        <!--y轴的偏移量-->
+        <attr name="yc_dy" format="dimension" />
+        <!--左边是否显示阴影-->
+        <attr name="yc_leftShow" format="boolean" />
+        <!--右边是否显示阴影-->
+        <attr name="yc_rightShow" format="boolean" />
+        <!--上边是否显示阴影-->
+        <attr name="yc_topShow" format="boolean" />
+        <!--下面是否显示阴影-->
+        <attr name="yc_bottomShow" format="boolean" />
+    </declare-styleable>
+
+    <style name="AppTheme.NoActionBar.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

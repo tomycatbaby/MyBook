@@ -2,10 +2,13 @@ package com.example.mybook;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -40,10 +43,10 @@ public class WindowFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView: ");
-        view = inflater.inflate(R.layout.fragment_window,container, false);
+        view = inflater.inflate(R.layout.fragment_window, container, false);
         initFruits();
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view1);
         recyclerView.setItemAnimator(null);
@@ -53,15 +56,8 @@ public class WindowFragment extends Fragment {
         //StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.HORIZONTAL);
         //recyclerView.setLayoutManager(staggeredGridLayoutManager);
         recyclerView.setLayoutManager(layoutManager);
-        try {
-            XmlPullParserFactory xmlPullParser =  XmlPullParserFactory.newInstance();
-
-        } catch (XmlPullParserException e) {
-            e.printStackTrace();
-        }
-        recyclerView.setNestedScrollingEnabled(false);
-        //recyclerView.setNestedScrollingEnabled(true);
-        //recyclerView1.setNestedScrollingEnabled(true);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+        //recyclerView.setNestedScrollingEnabled(false);
         //fruitAdapter = new FruitAdapter(fruitList);
         windowAdapter= new WindowAdapter(windowList,getContext());
         recyclerView.setAdapter(windowAdapter);
@@ -119,6 +115,19 @@ public class WindowFragment extends Fragment {
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+
+
+
+
+
+
+
+
+
+
+
+
+
         super.onActivityCreated(savedInstanceState);
         Log.d(TAG, "onActivityCreated: ");
     }

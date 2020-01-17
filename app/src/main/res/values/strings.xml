@@ -12,4 +12,12 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="shared">shared</string>
     <string name="zhengzaireying">正在热映</string>
+    <string name="media_url_mp4">http://maoyan.meituan.net/movie/videos/854x48070d27a06ca1a473fa75afc59831a3811.mp4</string>
+    <string name="title">标题</string>
+    <string name="message">内容</string>
+    <string name="confirm">确认</string>
+    <string name="cancel">取消</string>
+    <string name="title_activity_view">ViewActivity</string>
+    <string name="title_activity_more">MoreActivity</string>
+    <string name="title_activity_basic">BasicActivity</string>
 </resources>

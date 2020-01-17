@@ -17,6 +17,8 @@ import android.widget.Toast;
 import com.example.mybook.ImageActivity;
 import com.lzf.mybook.R;
 
+import java.io.FileDescriptor;
+import java.io.PrintWriter;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -73,7 +75,6 @@ public class DownloadService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         Log.d(TAG, "onBind: ");
-
         return mBinder;
     }
 
@@ -117,6 +118,7 @@ public class DownloadService extends Service {
 
     public void Te() {
         ExecutorService executorService = Executors.newFixedThreadPool(1);
+        //FutureJava中等待线程执行结果的类，使用get()能获取到执行的结果，它和Callable配合使用，get调用时任务未返回结果会一直阻塞，可以给get方法传入超时时间
         Future future = executorService.submit(new Callable<String>() {
             /**
              * Computes a result, or throws an exception if unable to do so.
@@ -125,15 +127,13 @@ public class DownloadService extends Service {
              * @throws Exception if unable to compute a result
              */
             @Override
-            public String call() throws Exception {
+            public String call()  {
                 return null;
             }
         });
         try {
             future.get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
     }
@@ -150,6 +150,16 @@ public class DownloadService extends Service {
     public void onDestroy() {
         Log.d(TAG, "onDestroy: ");
         super.onDestroy();
+    }
+
+    @Override
+    public void onTaskRemoved(Intent rootIntent) {
+        super.onTaskRemoved(rootIntent);
+    }
+
+    @Override
+    protected void dump(FileDescriptor fd, PrintWriter writer, String[] args) {
+        super.dump(fd, writer, args);
     }
 
     /**

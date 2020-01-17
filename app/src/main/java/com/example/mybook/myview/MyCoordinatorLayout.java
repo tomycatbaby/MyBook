@@ -1,17 +1,55 @@
 package com.example.mybook.myview;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
-public class MyCoordinatorLayout extends CoordinatorLayout{
-    private String TAG="MyCoordinatorLayout";
+public class MyCoordinatorLayout extends ViewGroup {
+    private String TAG = "MyCoordinatorLayout";
+
     public MyCoordinatorLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        int count = getChildCount();
+        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+        for (int i = 0; i < count; i++) {
+            View child = getChildAt(i);
+            if (child.getVisibility() == GONE) {
+                continue;
+            }
+            measureChildWithMargins(child,widthMeasureSpec,0,heightMeasureSpec,0);
+//            final LayoutParams lp =  child.getLayoutParams();
+//            if (lp.width == LayoutParams.WRAP_CONTENT){
+//                Log.d(TAG, "measure width: "+child.getMeasuredWidth());
+//            }
+            //Log.d(TAG, "width: " + lp.width + "height:" + lp.height);
+        }
+        Log.d(TAG, "onMeasure end: ");
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        Log.d(TAG, "onLayout: ");
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        Log.d(TAG, "onDraw: ");
     }
 
     @Override
@@ -40,8 +78,8 @@ public class MyCoordinatorLayout extends CoordinatorLayout{
                     return true;
                 }
         }*/
-        return true;
-        //return super.onInterceptTouchEvent(ev);
+        //return true;
+        return super.onInterceptTouchEvent(ev);
     }
 
     @Override
@@ -52,6 +90,7 @@ public class MyCoordinatorLayout extends CoordinatorLayout{
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
+
         Log.d(TAG, "onTouchEvent: ");
         return super.onTouchEvent(ev);
     }

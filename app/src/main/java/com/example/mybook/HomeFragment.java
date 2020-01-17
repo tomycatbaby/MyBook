@@ -37,10 +37,11 @@ public class HomeFragment extends Fragment {
         initFruits();
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setItemAnimator(null);
+        recyclerView.setItemViewCacheSize(16);
         //GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
-        fruitAdapter = new FruitAdapter(fruitList,getContext());
+        fruitAdapter = new FruitAdapter(fruitList,getActivity());
         recyclerView.setAdapter(fruitAdapter);
         swipeRefreshLayout = view.findViewById(R.id.swipe_refresh);
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorAccent));

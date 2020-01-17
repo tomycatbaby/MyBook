@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="false"
+    android:background="@color/black">
+<com.google.android.exoplayer2.ui.PlayerView
+    android:id="@+id/video_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:fastforward_increment="4000"
+    app:controller_layout_id="@layout/my_playback">
+
+</com.google.android.exoplayer2.ui.PlayerView>
+</android.support.constraint.ConstraintLayout>

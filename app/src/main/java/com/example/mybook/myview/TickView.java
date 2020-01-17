@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class TickView extends TextView {
+public class TickView extends android.support.v7.widget.AppCompatTextView {
 
     public TickView(Context context) {
         super(context);
@@ -42,7 +42,6 @@ public class TickView extends TextView {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-
         return super.onTouchEvent(event);
     }
 }

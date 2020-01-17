@@ -4,16 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.mybook.DetailActivity">
-
-    <TextView
-        android:id="@+id/text1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rect_solid_border"
-        android:layerType="software"
-        android:padding="5dp"
-        android:text="hello world" />
 
     <TextView
         android:id="@+id/t1"
@@ -22,6 +14,43 @@
         android:background="@drawable/rect_solid_border"
         android:layerType="software"
         android:padding="5dp"
-        android:text="t2" />
+        android:text="hello world" />
 
+    <TextView
+        android:id="@+id/t2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rect_solid_border"
+        android:layerType="software"
+        android:padding="5dp"
+        android:text="fire in hole " />
+    <com.example.mybook.myview.ShadowLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        app:yc_cornerRadius="18dp"
+        app:yc_dx="0dp"
+        app:yc_dy="0dp"
+        app:yc_shadowColor="#2a000000"
+        app:yc_shadowLimit="5dp"
+        app:yc_bottomShow="false">
+
+        <TextView
+            android:id="@+id/t3"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="完全圆形圆角"
+            android:textColor="#000" />
+    </com.example.mybook.myview.ShadowLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/float_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:srcCompat="@android:drawable/ic_input_add" />
 </LinearLayout>
